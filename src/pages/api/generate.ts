@@ -13,27 +13,27 @@ const sitePassword = import.meta.env.SITE_PASSWORD
 export const post: APIRoute = async(context) => {
   const body = await context.request.json()
   const { sign, time, messages, pass } = body
-  if (!messages) {
-    return new Response(JSON.stringify({
-      error: {
-        message: 'No input text.',
-      },
-    }), { status: 400 })
-  }
-  if (sitePassword && sitePassword !== pass) {
-    return new Response(JSON.stringify({
-      error: {
-        message: 'Invalid password.',
-      },
-    }), { status: 401 })
-  }
-  if (import.meta.env.PROD && !await verifySignature({ t: time, m: messages?.[messages.length - 1]?.content || '' }, sign)) {
-    return new Response(JSON.stringify({
-      error: {
-        message: 'Invalid signature.',
-      },
-    }), { status: 401 })
-  }
+  // if (!messages) {
+  //   return new Response(JSON.stringify({
+  //     error: {
+  //       message: 'No input text.',
+  //     },
+  //   }), { status: 400 })
+  // }
+  // if (sitePassword && sitePassword !== pass) {
+  //   return new Response(JSON.stringify({
+  //     error: {
+  //       message: 'Invalid password.',
+  //     },
+  //   }), { status: 401 })
+  // }
+  // if (import.meta.env.PROD && !await verifySignature({ t: time, m: messages?.[messages.length - 1]?.content || '' }, sign)) {
+  //   return new Response(JSON.stringify({
+  //     error: {
+  //       message: 'Invalid signature.',
+  //     },
+  //   }), { status: 401 })
+  // }
   const initOptions = generatePayload(apiKey, messages)
   // #vercel-disable-blocks
   if (httpsProxy)

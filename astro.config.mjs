@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config'
 import unocss from 'unocss/astro'
 import solidJs from '@astrojs/solid-js'
-import vercelDisableBlocks from './plugins/vercelDisableBlocks'
 
 import node from '@astrojs/node'
 import vercel from '@astrojs/vercel/edge'
-import netlify from "@astrojs/netlify/edge-functions";
+import netlify from '@astrojs/netlify/edge-functions'
+import vercelDisableBlocks from './plugins/vercelDisableBlocks'
 
 const envAdapter = () => {
   if (process.env.OUTPUT == 'vercel') {
@@ -14,7 +14,7 @@ const envAdapter = () => {
     return netlify()
   } else {
     return node({
-      mode: 'standalone'
+      mode: 'standalone',
     })
   }
 }
@@ -23,14 +23,14 @@ const envAdapter = () => {
 export default defineConfig({
   integrations: [
     unocss(),
-    solidJs()
+    solidJs(),
   ],
-  output: 'server',
-  adapter: envAdapter(),
+  // output: 'server',
+  // adapter: envAdapter(),
   vite: {
     plugins: [
       process.env.OUTPUT == 'vercel' && vercelDisableBlocks(),
       process.env.OUTPUT == 'netlify' && vercelDisableBlocks(),
-    ]
+    ],
   },
-});
+})
